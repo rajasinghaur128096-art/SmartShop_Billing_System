@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Login - SmartShop{% endblock %}
+
+{% block content %}
+<div class="auth-wrap">
+    <div class="auth-card">
+        <h1>Welcome back</h1>
+
+        <p class="muted">
+            Login to continue shopping.
+        </p>
+
+        <form method="post">
+            <div class="field">
+                <label>Username</label>
+                <input
+                    name="username"
+                    required
+                >
+            </div>
+
+            <div class="field">
+                <label>Password</label>
+                <input
+                    type="password"
+                    name="password"
+                    required
+                >
+            </div>
+
+            <button
+                class="btn full"
+                type="submit"
+            >
+                Login
+            </button>
+        </form>
+
+        <p class="muted">
+            New customer?
+            <a
+                href="{{ url_for('register') }}"
+                class="green-link"
+            >
+                Create an account
+            </a>
+        </p>
+
+        <small class="muted">
+            Demo admin: admin / admin123
+        </small>
+    </div>
+</div>
+{% endblock %}

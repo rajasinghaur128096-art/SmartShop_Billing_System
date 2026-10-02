@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Server Error - SmartShop{% endblock %}
+
+{% block content %}
+<div class="empty">
+    <h1>Something went wrong</h1>
+
+    <p>
+        The application encountered an unexpected error.
+        Check the terminal for details.
+    </p>
+
+    <a
+        class="btn"
+        href="{{ url_for('home') }}"
+    >
+        Return to shop
+    </a>
+</div>
+{% endblock %}

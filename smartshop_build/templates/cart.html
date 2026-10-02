@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Cart - SmartShop{% endblock %}
+
+{% block content %}
+<div class="section-heading">
+    <div>
+        <h2>Your shopping cart</h2>
+
+        <span class="muted">
+            {{ items|length }} different products
+        </span>
+    </div>
+</div>
+
+{% if items %}
+<div class="cart-layout">
+    <div class="form-card">
+        <form
+            method="post"
+            action="{{ url_for('update_cart') }}"
+        >
+            {% for item in items %}
+                <div class="cart-item">
+                    <img
+                        src="{{ item.image }}"
+                        alt="{{ item.name }}"
+                    >
+
+                    <div>
+                        <h3>{{ item.name }}</h3>
+
+                        <span class="muted">
+                            {{ item.price|money }} each
+                        </span>
+                    </div>
+
+                    <input
+                        class="quantity-input"
+                        type="number"
+                        min="0"
+                        max="{{ item.stock }}"
+                        name="qty_{{ item.id }}"
+                        value="{{ item.quantity }}"
+                    >
+
+                    <strong>
+                        {{ item.line_total|money }}
+                    </strong>
+
+                    <a
+                        class="btn danger"
+                        href="{{ url_for(
+                            'remove_from_cart',
+                            product_id=item.id
+                        ) }}"
+                    >
+                        Remove
+                    </a>
+                </div>
+            {% endfor %}
+
+            <br>
+
+            <button
+                class="btn secondary"
+                type="submit"
+            >
+                Update cart
+            </button>
+        </form>
+    </div>
+
+    <div class="summary-card">
+        <h3>Order summary</h3>
+
+        <div class="summary-row">
+            <span>Subtotal</span>
+            <strong>{{ subtotal|money }}</strong>
+        </div>
+
+        <div class="summary-row">
+            <span>GST 5%</span>
+            <strong>{{ gst|money }}</strong>
+        </div>
+
+        <div class="summary-row total">
+            <span>Total</span>
+            <strong>{{ total|money }}</strong>
+        </div>
+
+        <br>
+
+        <a
+            class="btn full"
+            href="{{ url_for('checkout') }}"
+        >
+            Continue to checkout
+        </a>
+    </div>
+</div>
+{% else %}
+<div class="empty">
+    <h3>Your cart is empty</h3>
+    <p>Add some products to begin shopping.</p>
+
+    <a
+        class="btn"
+        href="{{ url_for('home') }}"
+    >
+        Browse products
+    </a>
+</div>
+{% endif %}
+{% endblock %}

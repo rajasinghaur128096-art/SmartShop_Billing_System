@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout - SmartShop{% endblock %}
+
+{% block content %}
+<div class="section-heading">
+    <div>
+        <h2>Checkout</h2>
+
+        <span class="muted">
+            Complete your order securely.
+        </span>
+    </div>
+</div>
+
+<div class="checkout-layout">
+    <div class="form-card">
+        <form method="post">
+            <h3>Delivery details</h3>
+
+            <div class="form-grid">
+                <div class="field">
+                    <label>Customer name</label>
+                    <input
+                        value="{{ user.name }}"
+                        disabled
+                    >
+                </div>
+
+                <div class="field">
+                    <label>Phone number</label>
+                    <input
+                        name="phone"
+                        type="tel"
+                        minlength="10"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Delivery address</label>
+                <textarea
+                    name="address"
+                    rows="4"
+                    required
+                ></textarea>
+            </div>
+
+            <div class="field">
+                <label>Discount code</label>
+                <input
+                    name="discount_code"
+                    placeholder="Try SAVE10"
+                >
+            </div>
+
+            <div class="field">
+                <label>Payment method</label>
+
+                <select name="payment_method">
+                    <option>UPI</option>
+                    <option>Card</option>
+                    <option>Cash on Delivery</option>
+                </select>
+                <p class="muted">UPI and Card are demo payment flows in this prototype. Cash on Delivery stays pending until payment is collected.</p>
+            </div>
+
+            <button
+                class="btn full"
+                type="submit"
+            >
+                Place order
+            </button>
+        </form>
+    </div>
+
+    <div class="summary-card">
+        <h3>Order summary</h3>
+
+        {% for item in items %}
+            <div class="summary-row">
+                <span>
+                    {{ item.name }} × {{ item.quantity }}
+                </span>
+
+                <strong>
+                    {{ item.line_total|money }}
+                </strong>
+            </div>
+        {% endfor %}
+
+        <div class="summary-row">
+            <span>Subtotal</span>
+            <strong>{{ subtotal|money }}</strong>
+        </div>
+
+        <div class="summary-row">
+            <span>GST</span>
+            <strong>{{ gst|money }}</strong>
+        </div>
+
+        <div class="summary-row total">
+            <span>Total</span>
+            <strong>{{ total|money }}</strong>
+        </div>
+    </div>
+</div>
+{% endblock %}
