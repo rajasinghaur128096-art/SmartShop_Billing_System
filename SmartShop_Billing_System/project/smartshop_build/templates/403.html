@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Access Denied - SmartShop{% endblock %}
+
+{% block content %}
+<div class="empty">
+    <h1>Access denied</h1>
+    <p>You do not have permission to view this page.</p>
+
+    <a
+        class="btn"
+        href="{{ url_for('home') }}"
+    >
+        Go home
+    </a>
+</div>
+{% endblock %}

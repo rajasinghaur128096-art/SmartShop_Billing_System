@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Invoice - SmartShop{% endblock %}
+
+{% block content %}
+<div class="section-heading">
+    <div>
+        <h2>Invoice #{{ order.id }}</h2>
+
+        <span class="muted">
+            {{ order.created_at }}
+        </span>
+    </div>
+
+    <div class="invoice-buttons">
+        <button
+            class="btn secondary"
+            type="button"
+            onclick="window.print()"
+        >
+            Print bill
+        </button>
+
+        <a
+            class="btn"
+            href="{{ url_for(
+                'download_pdf',
+                order_id=order.id
+            ) }}"
+        >
+            Download PDF
+        </a>
+    </div>
+</div>
+
+<div class="form-card">
+    <div class="section-heading">
+        <div>
+            <h2>SmartShop</h2>
+
+            <p class="muted">
+                Customer: {{ order.customer_name }}
+            </p>
+        </div>
+
+        <span class="badge">
+            {{ order.order_status }}
+        </span>
+    </div>
+
+    <p class="muted">
+        <strong>Phone:</strong>
+        {{ order.phone }}
+        <br>
+
+        <strong>Address:</strong>
+        {{ order.address }}
+    </p>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.product_name }}</td>
+                        <td>{{ item.price|money }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.line_total|money }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+
+    <div class="invoice-total">
+        <div class="summary-row">
+            <span>Subtotal</span>
+            <strong>{{ order.subtotal|money }}</strong>
+        </div>
+
+        <div class="summary-row">
+            <span>Discount</span>
+            <strong>-{{ order.discount|money }}</strong>
+        </div>
+
+        <div class="summary-row">
+            <span>GST</span>
+            <strong>{{ order.gst|money }}</strong>
+        </div>
+
+        <div class="summary-row total">
+            <span>Total</span>
+            <strong>{{ order.total|money }}</strong>
+        </div>
+
+        <p class="muted">
+            Payment:
+            {{ order.payment_method }}
+            ·
+            {{ order.payment_status }}
+        </p>
+    </div>
+</div>
+{% endblock %}

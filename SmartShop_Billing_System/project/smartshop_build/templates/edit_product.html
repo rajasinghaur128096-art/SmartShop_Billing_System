@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit Product - SmartShop
+{% endblock %}
+
+{% block content %}
+<div class="section-heading">
+    <div>
+        <h1>Update product</h1>
+
+        <p class="muted">
+            Edit product name, price, stock, image and description.
+        </p>
+    </div>
+
+    <a
+        class="btn secondary"
+        href="{{ url_for('admin') }}"
+    >
+        Back to dashboard
+    </a>
+</div>
+
+<div class="form-card edit-product-card">
+    <form
+        method="post"
+        action="{{ url_for(
+            'edit_product',
+            product_id=product.id
+        ) }}"
+    >
+        <div class="field">
+            <label>Product name</label>
+
+            <input
+                type="text"
+                name="name"
+                value="{{ product.name }}"
+                required
+            >
+        </div>
+
+        <div class="form-grid">
+            <div class="field">
+                <label>Category</label>
+
+                <input
+                    type="text"
+                    name="category"
+                    value="{{ product.category }}"
+                    required
+                >
+            </div>
+
+            <div class="field">
+                <label>Price</label>
+
+                <input
+                    type="number"
+                    name="price"
+                    min="0"
+                    step="0.01"
+                    value="{{ product.price }}"
+                    required
+                >
+            </div>
+
+            <div class="field">
+                <label>Stock</label>
+
+                <input
+                    type="number"
+                    name="stock"
+                    min="0"
+                    value="{{ product.stock }}"
+                    required
+                >
+            </div>
+
+            <div class="field">
+                <label>Image URL</label>
+
+                <input
+                    type="url"
+                    name="image"
+                    value="{{ product.image }}"
+                    required
+                >
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Description</label>
+
+            <textarea
+                name="description"
+                rows="5"
+            >{{ product.description }}</textarea>
+        </div>
+
+        <div class="edit-actions">
+            <button
+                class="btn"
+                type="submit"
+            >
+                Update product
+            </button>
+
+            <a
+                class="btn secondary"
+                href="{{ url_for('admin') }}"
+            >
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

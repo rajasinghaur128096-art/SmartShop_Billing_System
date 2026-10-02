@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Page Not Found - SmartShop{% endblock %}
+
+{% block content %}
+<div class="empty">
+    <h1>Page not found</h1>
+    <p>The page you requested does not exist.</p>
+
+    <a
+        class="btn"
+        href="{{ url_for('home') }}"
+    >
+        Go home
+    </a>
+</div>
+{% endblock %}

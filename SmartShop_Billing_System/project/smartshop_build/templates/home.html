@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}Shop - SmartShop{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>Better groceries for everyday living.</h1>
+
+        <p>
+            Shop trusted household essentials, groceries and personal
+            care products with a simple checkout experience.
+        </p>
+
+        <a
+            class="btn warning"
+            href="#products"
+        >
+            Browse products
+        </a>
+    </div>
+</section>
+
+<section id="products">
+    <div class="section-heading">
+        <div>
+            <h2>Our products</h2>
+
+            <span class="muted">
+                {{ products|length }} products available
+            </span>
+        </div>
+    </div>
+
+    <form
+        class="search-bar"
+        method="get"
+    >
+        <input
+            type="search"
+            name="q"
+            value="{{ search }}"
+            placeholder="Search products..."
+        >
+
+        <select name="category">
+            <option value="">
+                All categories
+            </option>
+
+            {% for category in categories %}
+                <option
+                    value="{{ category.category }}"
+                    {% if selected_category ==
+                        category.category %}
+                        selected
+                    {% endif %}
+                >
+                    {{ category.category }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button
+            class="btn"
+            type="submit"
+        >
+            Search
+        </button>
+    </form>
+
+    {% if products %}
+        <div class="product-grid">
+            {% for product in products %}
+                <article class="product-card">
+                    <img
+                        class="product-image"
+                        src="{{ product.image }}"
+                        alt="{{ product.name }}"
+                    >
+
+                    <div class="product-content">
+                        <div class="category">
+                            {{ product.category }}
+                        </div>
+
+                        <h3 class="product-title">
+                            {{ product.name }}
+                        </h3>
+
+                        <p class="product-description">
+                            {{ product.description }}
+                        </p>
+
+                        <div class="product-bottom">
+                            <div>
+                                <div class="price">
+                                    {{ product.price|money }}
+                                </div>
+
+                                <div class="stock">
+                                    {{ product.stock }}
+                                    left in stock
+                                </div>
+                            </div>
+
+                            <form
+                                class="add-to-cart-form"
+                                method="post"
+                                action="{{ url_for(
+                                    'add_to_cart',
+                                    product_id=product.id
+                                ) }}"
+                            >
+                                <input
+                                    type="hidden"
+                                    name="quantity"
+                                    value="1"
+                                >
+
+                                <button
+                                    class="btn add-cart-button"
+                                    type="submit"
+                                >
+                                    Add
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty">
+            <h3>No products found</h3>
+            <p>Try another search or category.</p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}
